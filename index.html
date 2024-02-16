@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Blacksmith</title>
+   
+<script>
+        console.log ("Hello, Javascript!");
+        let gold = 0;
+let ore = 0;
+let wood = 0;
+let fireActive = false;
+let inventory = {
+  sword: 0,
+  axe: 0
+};
+
+function fire() {
+  if (!fireActive && wood > 0) {
+    fireActive = true;
+    wood--;
+    console.log("Fire started.");
+  } else if (fireActive) {
+    fireActive = false;
+    console.log("Fire stopped.");
+  } else {
+    console.log("Not enough wood to start fire or fire is already burning.");
+  }
+}
+
+function buy(item) {
+  if (!fireActive) {
+    switch(item) {
+      case 'ore':
+        if (gold >= 3) {
+          gold -= 3;
+          ore++;
+          console.log("1 piece of ore bought.");
+        } else {
+          console.log("Not enough gold to buy ore.");
+        }
+        break;
+      case 'wood':
+        if (gold >= 1) {
+          gold--;
+          wood++;
+          console.log("1 piece of wood bought.");
+        } else {
+          console.log("Not enough gold to buy wood.");
+        }
+        break;
+      default:
+        console.log("Invalid item to buy.");
+    }
+  } else {
+    console.log("Cannot buy while fire is burning.");
+  }
+}
+
+function make(item) {
+  if (fireActive) {
+    switch(item) {
+      case 'sword':
+        if (ore >= 2 && wood >= 1) {
+          ore -= 2;
+          wood--;
+          inventory.sword++;
+          console.log("1 sword made.");
+        } else {
+          console.log("Not enough ore or wood to make a sword.");
+        }
+        break;
+      case 'axe':
+        if (ore >= 1 && wood >= 2) {
+          ore--;
+          wood -= 2;
+          inventory.axe++;
+          console.log("1 axe made.");
+        } else {
+          console.log("Not enough ore or wood to make an axe.");
+        }
+        break;
+      default:
+        console.log("Invalid item to make.");
+    }
+  } else {
+    console.log("Cannot make weapons without fire.");
+  }
+}
+
+function sell(item) {
+  if (!fireActive) {
+    switch(item) {
+      case 'sword':
+        if (inventory.sword > 0) {
+          inventory.sword--;
+          gold += 5;
+          console.log("1 sword sold.");
+        } else {
+          console.log("No swords in inventory to sell.");
+        }
+        break;
+      case 'axe':
+        if (inventory.axe > 0) {
+          inventory.axe--;
+          gold += 4;
+          console.log("1 axe sold.");
+        } else {
+          console.log("No axes in inventory to sell.");
+        }
+        break;
+      default:
+        console.log("Invalid item to sell.");
+    }
+  } else {
+    console.log("Cannot sell weapons while fire is burning.");
+  }
+}
+
+function inventory() {
+  console.log(`Inventory: Swords - ${inventory.sword}, Axes - ${inventory.axe}`);
+}
+
+function help() {
+ 
+}
+
+// Log the help() function
+
+    </script>
+</head>
+<body>
